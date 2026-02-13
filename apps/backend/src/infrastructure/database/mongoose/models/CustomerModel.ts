@@ -19,8 +19,6 @@ const customerSchema = new Schema(
   }
 );
 
-customerSchema.index({ email: 1 }, { unique: true });
-
 export type CustomerDocument = InferSchemaType<typeof customerSchema> & { _id: mongoose.Types.ObjectId };
 
 export const CustomerModel = mongoose.model('Customer', customerSchema);

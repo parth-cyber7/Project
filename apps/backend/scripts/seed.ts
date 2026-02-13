@@ -69,7 +69,30 @@ async function seed() {
 }
 
 seed().catch(async (error) => {
-  logger.error('Seed failed', { error });
-  await disconnectDatabase();
+  const normalizedError =
+    error instanceof Error
+      ? {
+          name: error.name,
+          message: error.message,
+          stack: error.stack
+        }
+      : { value: error };
+
+  logger.error('Seed failed', normalizedError);
+
+  try {
+    await disconnectDatabase();
+  } catch (disconnectError) {
+    const normalizedDisconnectError =
+      disconnectError instanceof Error
+        ? {
+            name: disconnectError.name,
+            message: disconnectError.message,
+            stack: disconnectError.stack
+          }
+        : { value: disconnectError };
+    logger.error('Seed disconnect failed', normalizedDisconnectError);
+  }
+
   process.exit(1);
 });

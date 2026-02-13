@@ -14,7 +14,8 @@ This repository is configured so backend + frontend deploy from Render Blueprint
    - build install uses `--prod=false` so TypeScript/tooling dependencies are available during compile
 4. Frontend talks to backend through a public URL proxy (`/api` rewrite) using backend `RENDER_EXTERNAL_URL`, so you do not need to manually wire frontend API URL.
 5. Backend `CORS_ORIGIN` is auto-linked from frontend `RENDER_EXTERNAL_URL`.
-6. Backend seed runs on service start via start command chaining (`seed && start`) because `preDeployCommand` is not available on free tier.
+6. Backend runs seed on startup in best-effort mode (`seed || true`) because `preDeployCommand` is not available on free tier.
+   - this prevents non-critical seed issues from blocking service boot
 7. Node runtime is pinned via `.node-version`.
 
 ## Manual Steps Only (Things That Cannot Be Done From This Workspace)
