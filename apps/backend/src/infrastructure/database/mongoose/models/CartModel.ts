@@ -21,8 +21,6 @@ const cartSchema = new Schema(
   }
 );
 
-cartSchema.index({ customerId: 1 }, { unique: true });
-
 export type CartDocument = InferSchemaType<typeof cartSchema> & { _id: mongoose.Types.ObjectId };
 
 export const CartModel = mongoose.model('Cart', cartSchema);
