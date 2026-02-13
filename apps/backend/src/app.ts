@@ -1,6 +1,7 @@
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import express from 'express';
+import type { Express } from 'express';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import path from 'node:path';
@@ -12,7 +13,7 @@ import { createApiRoutes } from '@/interfaces/http/routes';
 import { swaggerSpec } from '@/interfaces/http/docs/swagger';
 import { env } from '@/shared/config/env';
 
-export function createApp() {
+export function createApp(): Express {
   const app = express();
   const container = createContainer();
 
