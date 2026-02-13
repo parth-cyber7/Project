@@ -3,6 +3,8 @@ import { StatusCodes } from 'http-status-codes';
 import type { AppContainer } from '@/infrastructure/container';
 import type { AuthenticatedRequest } from '@/shared/types/http';
 import { UnauthorizedError } from '@/shared/errors/UnauthorizedError';
+import { ValidationError } from '@/shared/errors/ValidationError';
+import { toSingleString } from '@/shared/utils/request';
 
 function cartToPlain(cart: {
   id?: string;
@@ -62,9 +64,15 @@ export class CartController {
       throw new UnauthorizedError('Unauthorized');
     }
 
+    const productId = toSingleString(req.params.productId);
+
+    if (!productId) {
+      throw new ValidationError('Invalid product id');
+    }
+
     const cart = await this.container.useCases.updateCartItem.execute({
       customerId: authReq.user.id,
-      productId: req.params.productId,
+      productId,
       quantity: req.body.quantity
     });
 
@@ -81,9 +89,15 @@ export class CartController {
       throw new UnauthorizedError('Unauthorized');
     }
 
+    const productId = toSingleString(req.params.productId);
+
+    if (!productId) {
+      throw new ValidationError('Invalid product id');
+    }
+
     const cart = await this.container.useCases.removeFromCart.execute({
       customerId: authReq.user.id,
-      productId: req.params.productId
+      productId
     });
 
     res.status(StatusCodes.OK).json({
