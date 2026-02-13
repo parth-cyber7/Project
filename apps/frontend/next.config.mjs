@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
-const backendHost = process.env.BACKEND_HOST;
-const backendPort = process.env.BACKEND_PORT;
-const hasInternalApiProxy = Boolean(backendHost && backendPort);
+const backendExternalUrl = process.env.BACKEND_EXTERNAL_URL;
+const hasApiProxy = Boolean(backendExternalUrl);
 
 const nextConfig = {
   images: {
@@ -11,14 +10,16 @@ const nextConfig = {
     ]
   },
   async rewrites() {
-    if (!hasInternalApiProxy) {
+    if (!hasApiProxy) {
       return [];
     }
+
+    const normalizedBackendUrl = backendExternalUrl.replace(/\/$/, '');
 
     return [
       {
         source: '/api/:path*',
-        destination: `http://${backendHost}:${backendPort}/api/:path*`
+        destination: `${normalizedBackendUrl}/api/:path*`
       }
     ];
   }

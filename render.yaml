@@ -2,7 +2,7 @@ services:
   - type: web
     name: commercecraft-backend
     runtime: node
-    plan: starter
+    plan: free
     autoDeployTrigger: commit
     healthCheckPath: /health
     buildCommand: corepack enable && pnpm install --no-frozen-lockfile && pnpm --filter @ecom/shared build && pnpm --filter @apps/backend build
@@ -56,7 +56,7 @@ services:
   - type: web
     name: commercecraft-frontend
     runtime: node
-    plan: starter
+    plan: free
     autoDeployTrigger: commit
     healthCheckPath: /
     buildCommand: corepack enable && pnpm install --no-frozen-lockfile && pnpm --filter @ecom/shared build && pnpm --filter @apps/frontend build
@@ -72,15 +72,10 @@ services:
     envVars:
       - key: NODE_VERSION
         value: 22.22.0
-      - key: BACKEND_HOST
+      - key: BACKEND_EXTERNAL_URL
         fromService:
           type: web
           name: commercecraft-backend
-          property: host
-      - key: BACKEND_PORT
-        fromService:
-          type: web
-          name: commercecraft-backend
-          property: port
+          envVarKey: RENDER_EXTERNAL_URL
       - key: NEXT_PUBLIC_API_BASE_URL
         value: /api

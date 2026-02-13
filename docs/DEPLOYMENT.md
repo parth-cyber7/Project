@@ -1,15 +1,16 @@
 # Deployment Guide (Render-Only, No Local Runtime)
 
-This repository is configured so backend + frontend deploy from Render Blueprint with no local Node/Docker required.
+This repository is configured so backend + frontend deploy from Render Blueprint on free-tier plans with no local Node/Docker required.
 
 ## What Is Already Automated In Repo
 
 1. `render.yaml` provisions two Render web services:
    - `commercecraft-backend`
    - `commercecraft-frontend`
+   - both use `plan: free`
 2. Backend build/start commands are preconfigured for this monorepo.
 3. Frontend build/start commands are preconfigured for this monorepo.
-4. Frontend talks to backend through an internal Render private-network proxy (`/api` rewrite), so you do not need to manually wire frontend API URL.
+4. Frontend talks to backend through a public URL proxy (`/api` rewrite) using backend `RENDER_EXTERNAL_URL`, so you do not need to manually wire frontend API URL.
 5. Backend `CORS_ORIGIN` is auto-linked from frontend `RENDER_EXTERNAL_URL`.
 6. Backend seed runs automatically on deploy via `preDeployCommand`.
 7. Node runtime is pinned via `.node-version`.
@@ -37,3 +38,8 @@ After deploy completes:
 - Backend is reachable via frontend `/api` proxy and directly on its Render URL.
 - Seed data is applied automatically during backend pre-deploy.
 - API docs are available at `<backend-url>/api/docs`.
+
+## Free Tier Notes
+
+1. Free web services may spin down when idle, so first request after idle can be slow.
+2. Keep using Atlas free/shared cluster if you want fully free infrastructure.

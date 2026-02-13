@@ -76,5 +76,5 @@ Production-ready full-stack eCommerce platform built with Turborepo and Domain D
 See:
 
 - `docs/SETUP.md` for local development
-- `docs/DEPLOYMENT.md` for Render + Atlas no-local deployment
+- `docs/DEPLOYMENT.md` for Render + Atlas no-local deployment (free-tier ready)
 - `render.yaml` for one-click Render Blueprint deployment (no local setup required)
