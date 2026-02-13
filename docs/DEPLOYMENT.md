@@ -10,6 +10,7 @@ This repository is configured so backend + frontend deploy from Render Blueprint
    - both use `plan: free`
 2. Backend build/start commands are preconfigured for this monorepo.
 3. Frontend build/start commands are preconfigured for this monorepo.
+   - each service installs only its own workspace graph to reduce free-tier build failures
 4. Frontend talks to backend through a public URL proxy (`/api` rewrite) using backend `RENDER_EXTERNAL_URL`, so you do not need to manually wire frontend API URL.
 5. Backend `CORS_ORIGIN` is auto-linked from frontend `RENDER_EXTERNAL_URL`.
 6. Backend seed runs on service start via start command chaining (`seed && start`) because `preDeployCommand` is not available on free tier.

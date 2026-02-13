@@ -5,7 +5,7 @@ services:
     plan: free
     autoDeployTrigger: commit
     healthCheckPath: /health
-    buildCommand: corepack enable && pnpm install --no-frozen-lockfile && pnpm --filter @ecom/shared build && pnpm --filter @apps/backend build
+    buildCommand: corepack enable && pnpm install --no-frozen-lockfile --filter @apps/backend... --filter @ecom/shared... && pnpm --filter @ecom/shared build && pnpm --filter @apps/backend build
     startCommand: pnpm --filter @apps/backend seed && pnpm --filter @apps/backend start
     buildFilter:
       paths:
@@ -58,8 +58,8 @@ services:
     plan: free
     autoDeployTrigger: commit
     healthCheckPath: /
-    buildCommand: corepack enable && pnpm install --no-frozen-lockfile && pnpm --filter @ecom/shared build && pnpm --filter @apps/frontend build
-    startCommand: pnpm --filter @apps/frontend start
+    buildCommand: corepack enable && pnpm install --no-frozen-lockfile --filter @apps/frontend... --filter @ecom/shared... && pnpm --filter @ecom/shared build && pnpm --filter @apps/frontend build
+    startCommand: pnpm --filter @apps/frontend exec next start -H 0.0.0.0 -p $PORT
     buildFilter:
       paths:
         - apps/frontend/**
