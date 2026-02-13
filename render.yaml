@@ -6,8 +6,7 @@ services:
     autoDeployTrigger: commit
     healthCheckPath: /health
     buildCommand: corepack enable && pnpm install --no-frozen-lockfile && pnpm --filter @ecom/shared build && pnpm --filter @apps/backend build
-    preDeployCommand: pnpm --filter @apps/backend seed
-    startCommand: pnpm --filter @apps/backend start
+    startCommand: pnpm --filter @apps/backend seed && pnpm --filter @apps/backend start
     buildFilter:
       paths:
         - apps/backend/**

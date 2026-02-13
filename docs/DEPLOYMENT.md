@@ -12,7 +12,7 @@ This repository is configured so backend + frontend deploy from Render Blueprint
 3. Frontend build/start commands are preconfigured for this monorepo.
 4. Frontend talks to backend through a public URL proxy (`/api` rewrite) using backend `RENDER_EXTERNAL_URL`, so you do not need to manually wire frontend API URL.
 5. Backend `CORS_ORIGIN` is auto-linked from frontend `RENDER_EXTERNAL_URL`.
-6. Backend seed runs automatically on deploy via `preDeployCommand`.
+6. Backend seed runs on service start via start command chaining (`seed && start`) because `preDeployCommand` is not available on free tier.
 7. Node runtime is pinned via `.node-version`.
 
 ## Manual Steps Only (Things That Cannot Be Done From This Workspace)
@@ -36,7 +36,7 @@ After deploy completes:
 
 - Frontend URL serves the application.
 - Backend is reachable via frontend `/api` proxy and directly on its Render URL.
-- Seed data is applied automatically during backend pre-deploy.
+- Seed data is applied automatically during backend service start.
 - API docs are available at `<backend-url>/api/docs`.
 
 ## Free Tier Notes
